@@ -14,9 +14,10 @@ def get_user(email):
 # user_info: dictionary
 # {"email" : "example@gmail.com",
 #  "first_name" : "Ex",
-#  "last_name" : "Ample"}
-#  "password" : "a38jg38vno83oour"
-#  "type" : "donor" // "director"
+#  "last_name" : "Ample",
+#  "password" : "a38jg38vno83oour",
+#  "type" : "donor" // "director",
+#  "shelters" : []     //ids of shelters they are director of
 # }
 def add_user(user_info):
     db.users.insert_one(user_info)
@@ -42,9 +43,14 @@ def get_shelter(shelter_id):
 # }
 def add_shelter(shelter_info):
     shelter_info["last_updated"] = get_time()
-    shelter_info["id"] = uuid.uuid4().int
+    shelter_id = uuid.uuid4().int
+    shelter_info["id"] = shelter_id
     db.shelters.insert_one(shelter_info)
+    return shelter_id
 
+def set_user_data(email, field, value):
+    db.users.update_one({"email" : email}, {"$set" : {field : value}})
+    
 def set_shelter_data(shelter_id, field, value):
     db.shelters.update_one({"id" : shelter_id}, {"$set" : {field : value}})
     db.shelters.update_one({"id" : shelter_id}, {"$set" : {"last_updated" : get_time()}})
