@@ -1,0 +1,13 @@
+function initMap() {
+    var midtown = {lat: 40.7561050, lng:-73.9869487};
+    var map = new google.maps.Map(document.getElementById('map'), {
+	zoom: 12,
+	center: midtown
+    });
+    var marker = new google.maps.Marker({
+	position: midtown,
+	map: map
+    });
+}
+
+var add_marker = f
