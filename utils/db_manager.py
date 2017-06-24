@@ -2,6 +2,9 @@ import pymongo
 import datetime
 import uuid
 
+server = MongoClient()
+db = server["rick"]
+
 def get_time():
     return datetime.datetime.utcnow()
 
