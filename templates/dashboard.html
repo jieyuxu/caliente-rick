@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 {% block body %}
   {% if donor %}
     <div>
@@ -12,7 +13,35 @@
 
       <!-- Tab panes -->
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="home">...</div>
+        <div role="tabpanel" class="tab-pane active" id="home">
+          <h3>Add a Shelter</h3>
+          <form action="/add/" method="POST">
+            <!-- # shelter_info: dictionary
+            # {"name" : "Example Shelter",
+            #  "description" : "We are a shelter",
+            #  "id" : 12345,
+            #  "address_zip_code" : "10282",
+            #  "address_state" : "NY",
+            #  "address_city" : "New York"
+            #  "address_street" : "345 Chambers St.",
+            #  "phone number" : "2123123800"
+            #  "directors" : ["dir1@gmail.com", "dir2@gmail.com"],   //email of users
+            #  "population" : 50,
+            #  "needs" : {"tampons" : 50,
+            #             "pads" : 25,
+            #             "diapers" : 10}
+            #  "last_updated" : 2017-06-24 12:55     //datetime object
+            # } -->
+            Shelter Name: <input class="form-control" type="text" name="email" required> <br>
+            Description: <input class="form-control" type="text" name="email" required> <br>
+            Street Address: <input class="form-control" type="text" name="email" required> <br>
+            City:  <input class="form-control" type="text" name="city" required> <br>
+            State: <input class="form-control" type="text" name="state" required> <br>
+            Zip Code: <input class="form-control" type="text" name="zip" required> <br>
+            Phone Number: <input class="form-control" type="text" name="zip"><br/>
+            <input class="btn btn-success btn-block" type="submit" name="button" value="dreg" action="submit">
+          </form>
+        </div>
         <div role="tabpanel" class="tab-pane" id="profile">...</div>
         <div role="tabpanel" class="tab-pane" id="messages">...</div>
         <div role="tabpanel" class="tab-pane" id="settings">...</div>
