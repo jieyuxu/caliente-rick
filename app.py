@@ -15,6 +15,10 @@ app.config.update(dict( # Make sure the secret key is set for use of the session
     SECRET_KEY = 'secret'
     ))
 
+@app.route("/")
+def home():
+    return render_template("home.html")
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
