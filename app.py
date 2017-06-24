@@ -2,7 +2,6 @@ import os, sys, random, csv
 from flask import Flask, render_template, url_for, request, redirect, session, make_response
 import hashlib
 #oauth imports and stuff
-from oauth2client.client import flow_from_clientsecrets, OAuth2Credentials # OAuth library, import the function and class that this uses
 from httplib2 import Http # The http library to issue REST calls to the oauth api
 
 import json # Json library to handle replies
