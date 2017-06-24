@@ -29,10 +29,8 @@ def get_shelter(shelter_id):
 # {"name" : "Example Shelter",
 #  "description" : "We are a shelter",
 #  "id" : 12345,
-#  "address_zip_code" : "10282",
-#  "address_state" : "NY",
-#  "address_city" : "New York"
-#  "address_street" : "345 Chambers St.",
+#  "latitude" : "41.123",
+#  "longitude" : "-71.95",
 #  "phone number" : "2123123800"
 #  "directors" : ["dir1@gmail.com", "dir2@gmail.com"],   //email of users
 #  "population" : 50,
@@ -47,6 +45,14 @@ def add_shelter(shelter_info):
     shelter_info["id"] = shelter_id
     db.shelters.insert_one(shelter_info)
     return shelter_id
+
+def get_shelter_locations():
+    locations = []
+    shelters = db["shelters"]
+    for shelter in shelters:
+        locations.append({ "latitude" : shelter["latitude"],
+                           "longitude" : shelter["longitude"]})
+    return locations        
 
 def set_user_data(email, field, value):
     db.users.update_one({"email" : email}, {"$set" : {field : value}})

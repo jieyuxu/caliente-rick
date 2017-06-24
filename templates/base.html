@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    {% block head %}
     <!-- use utf-8 chars -->
     <meta charset="utf-8">
     <!-- look pretty on mobile -->
@@ -11,7 +12,8 @@
       <script src="{{ url_for('static',filename='bootstrap.min.js') }}"></script>
       <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap.min.css') }}">
       <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
-    <title>{% block title %} {% endblock %}</title>
+      <title>{% block title %} {% endblock %}</title>
+      {% endblock %}
   </head>
 <body>
 
