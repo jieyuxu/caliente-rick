@@ -1,4 +1,4 @@
-import pymongo
+from pymongo import MongoClient
 import datetime
 import uuid
 
@@ -50,7 +50,7 @@ def add_shelter(shelter_info):
 
 def set_user_data(email, field, value):
     db.users.update_one({"email" : email}, {"$set" : {field : value}})
-    
+
 def set_shelter_data(shelter_id, field, value):
     db.shelters.update_one({"id" : shelter_id}, {"$set" : {field : value}})
     db.shelters.update_one({"id" : shelter_id}, {"$set" : {"last_updated" : get_time()}})
