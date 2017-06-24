@@ -1,21 +1,25 @@
 {% extends "base.html" %}
 {% block body %}
-  {% if donor %}
+  {% if director %}
     <div>
 
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
         <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+        <li role="presentation"><a href="#add" aria-controls="add" role="tab" data-toggle="tab">Add Shelter</a></li>
         <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
       </ul>
 
       <!-- Tab panes -->
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
-          <h3>Add a Shelter</h3>
-          <form action="/add/" method="POST">
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="profile">...</div>
+        <div role="tabpanel" class="tab-pane" id="add">
+          <form class="col-md-12 textcenter" action="/add/" method="POST" id="add">
+            <h3>Add a Shelter</h3>
             <!-- # shelter_info: dictionary
             # {"name" : "Example Shelter",
             #  "description" : "We are a shelter",
@@ -32,23 +36,23 @@
             #             "diapers" : 10}
             #  "last_updated" : 2017-06-24 12:55     //datetime object
             # } -->
-            Shelter Name: <input class="form-control" type="text" name="email" required> <br>
-            Description: <input class="form-control" type="text" name="email" required> <br>
-            Street Address: <input class="form-control" type="text" name="email" required> <br>
+            Shelter Name: <input class="form-control" type="text" name="name" required> <br>
+            Street Address: <input class="form-control" type="text" name="street" required> <br>
             City:  <input class="form-control" type="text" name="city" required> <br>
             State: <input class="form-control" type="text" name="state" required> <br>
             Zip Code: <input class="form-control" type="text" name="zip" required> <br>
-            Phone Number: <input class="form-control" type="text" name="zip"><br/>
-            <input class="btn btn-success btn-block" type="submit" name="button" value="dreg" action="submit">
+            Phone Number: <input class="form-control" type="text" name="num" required><br/>
+            # of People Served:  <input class="form-control" type="number" name="pop" required><br/>
+            Description:
+            <textarea class="form-control" name="des" form="add"></textarea><br/>
+            <input class="btn btn-success btn-lg" type="submit" name="submit" value="submit" action="submit">
           </form>
         </div>
-        <div role="tabpanel" class="tab-pane" id="profile">...</div>
-        <div role="tabpanel" class="tab-pane" id="messages">...</div>
         <div role="tabpanel" class="tab-pane" id="settings">...</div>
       </div>
 
     </div>
-  {% elif director %}
+  {% elif donor %}
     <div>
 
       <!-- Nav tabs -->
