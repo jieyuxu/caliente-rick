@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 {% block body %}
 
-
-
+<head><link href="https://fonts.googleapis.com/css?family=Anton|Open+Sans+Condensed:300|Russo+One" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Acme|Cherry+Cream+Soda" rel="stylesheet"></head>
 <div class="jumbotron">
-  <h1 id = "projectname"><span style= "font-family:Cinzel">PROJECT CONNECTION</span>
+  <h1 id = "projectname"><span>PROJECT CONNECTION</span>
 	<img id = "picture" src ="http://findicons.com/files/icons/1580/devine_icons_part_2/128/home_w.png"/></h1>
 
-  <p id="description"><i>The best way for individual donors and homeless shelters to connect with one another, helping streamline the donating process and providing to those in need.</i></p>
+  <p id="description"><i>The best way for individual donors and homeless shelters to connect with one another, helping to streamline the donating process of providing to those in need.</i></p>
 </div>
 
 <div class="left">
@@ -15,7 +14,7 @@
     <div class="col-md-12 text-center">
       <div class="box">
         <div class="box-content">
-	  <h4><i>Lend a Helping Hand</i></4>
+	  <h4 style = "color:gray"><i>Lend a Helping Hand</i></4>
           <h1 class="tag-title">Login/Register</h1>
           <hr />
           <p class="intro">
@@ -59,7 +58,7 @@ setTimeout('nextPic()',3000)
 </div>
 </div>
 <div class = "left" id= "last">
-<h3> Make sure to check out your dashboard after logging in to see shelters near you and how you can help! </h3>
+<h3 style="font-size: 40px"> Make sure to check out your dashboard after logging in to see shelters near you and how you can help them! </h3>
 </div>
 </body>
 <style>
@@ -75,9 +74,10 @@ setTimeout('nextPic()',3000)
  #picture{
     margin-bottom: 40px;
 }
+
  #projectname{
-    text-decoration: underline double;
- 
+    
+    font-family: 'Anton', sans-serif;
 }
   .left{
     float:left;
@@ -85,12 +85,18 @@ setTimeout('nextPic()',3000)
 }
 #last{
    text-align: center;
+   font-family: 'Acme', cursive;
 }
 #slideshow{
 	padding-right: 200px;
 }
-  
+.row{
+	font-family: 'Anton', sans-serif;
+	padding-top: 20px;
+}
+
 </style>
+
   
 
 {% endblock %}
