@@ -155,7 +155,9 @@ def add():
 @app.route("/results/<code>")
 def results(code):
     data = db_manager.get_shelter(int(code))
-    return render_template("results.html", shelter = data)
+    donations = db_manager.get_donations(int(code))
+    print donations
+    return render_template("results.html", shelter = data, donations=donations)
 
 @app.route("/request/", methods=["POST"])
 def handlerequest():
@@ -226,10 +228,13 @@ def help():
 
 @app.route("/send/", methods=["POST"])
 def send():
+    #add_donation(email, shelter_id, product, amount):
     amt = request.form["damt"]
     first = request.form["fname"]
     last = request.form["lname"]
     email = request.form["email"]
+    print amt,first,last,email,request.form["id"], request.form["item"]
+    db_manager.add_donation(email, int(request.form["id"]), request.form["item"],amt)
     return redirect(url_for("dashboard"))
 if __name__ == '__main__':
     app.debug = True
