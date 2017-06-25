@@ -17,12 +17,13 @@ var shelters = [];
 var markers = [];
 var infowindows = [];
 
-function register_shelter(name, phone, desc, lat, lon, id){
+function register_shelter(name, phone, desc, lat, lon, address, id){
     shelters.push( {name : name,
 		    phone : phone,
 		    desc : desc,
 		    lat : lat,
-		    lon : lon,
+                    lon : lon,
+                    address : address,
 		    id: id} );
 }
 
@@ -59,9 +60,11 @@ function initMap() {
 	    shelter["name"] +
 	    '</h1><div>' +
 	    shelter["desc"] +
-	    '<br>Phone Number: ' +
+	    '<br><br>' +
+	    shelter["address"] +	    
+	    '<br><br>Phone Number: ' +
 	    formatPhoneNumber(shelter["phone"]) +
-	    '<br>' +
+            '<br>' +	    
 	    '<form action="/seeinfo/" method="POST"><input type="hidden" name="id" value="' +
 	    shelter["id"] +
 	    '"><input type="submit" value="See More"></form></div></div>';
@@ -173,6 +176,7 @@ function initMap() {
 	    "{{ location['description'] }}",
 	    {{ location["address"]["latitude"] }},
 	    {{ location["address"]["longitude"] }},
+	    "{{ location['address']['text'] }}",
 	    {{ location["id"] }}
 	    );
 	  </script>
