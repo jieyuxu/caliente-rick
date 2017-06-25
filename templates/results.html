@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      {% for item in shelter%}
+        <!-- {% if item == "address" %}
+          {{item}}: {{ geofxn(shelter[item], method="reverse") }}<br/>
+        {% else %} -->
+        {{item}}: {{shelter[item]}} <br/>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

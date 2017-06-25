@@ -8,47 +8,6 @@
        }
     </style>
 
-    <script src="{{ url_for('static', filename='map.js')}}"></script>
-
-    <script>
-var map;
-
-var shelters = [];
-
-function register_shelter(d){
-   shelters.push( d );
-}
-
-function add_marker(latitude, longitude){
-    console.log("im running");
-    var marker = new google.maps.Marker({
-	position: {lat : latitude, lng : longitude},
-	map: map,
-	title: 'Hello World!'
-    });
-
-}
-
-function initMap() {
-    var midtown = {lat: 40.7561050, lng:-73.9869487};
-
-    map = new google.maps.Map(document.getElementById('map'), {
-	zoom: 13,
-	center: midtown
-});
-
-    for (i = 0; i < shelters.length; i++){
-	add_marker(shelters[i]["latitude"], shelters[i]["longitude"]);
-	
-    };
-}
-
-    </script>
-
-    <script async defer
-		  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNjfxzJuAIph_75M8IyqwQVbGEBtt9B4E&callback=initMap">
-    </script>
-
 {% endblock %}
 
 {% block body %}
@@ -67,15 +26,6 @@ function initMap() {
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
 
-          <h3>Your Shelters</h3>
-          {% for shelter in shelters%}
-            <div class="panel panel-default">
-              <div class="panel-heading"><a href="/results/{{shelter['id']}}">{{shelter["name"]}}</a></div>
-              <div class="panel-body">
-                {{shelter["description"]}}
-              </div>
-            </div>
-          {% endfor %}
         </div>
         <div role="tabpanel" class="tab-pane" id="profile">...</div>
         <div role="tabpanel" class="tab-pane" id="add">
@@ -128,13 +78,10 @@ function initMap() {
         <div role="tabpanel" class="tab-pane active" id="home">
 
 	  <div id="map"></div>
-
-	  {% for location in locations %}
-	  <script>
-	    register_marker({{location["address"]["latitude"]}}, {{location["address"]["longitude"]}});
+	  <script src="{{ url_for('static', filename='map.js')}}"></script>
+	  <script async defer
+		  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNjfxzJuAIph_75M8IyqwQVbGEBtt9B4E&callback=initMap">
 	  </script>
-
-	  {% endfor %}
 
 	</div>
 	<div role="tabpanel" class="tab-pane" id="profile">...</div>
