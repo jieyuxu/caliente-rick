@@ -164,7 +164,6 @@ def handlerequest():
         amt = request.form["request_amt"]
         d = {request.form["request_name"]: request.form["request_amt"]}
         shelter = db_manager.get_shelter(int(request.form["id"]))
-        print shelter
         curr = shelter["needs"] #gets dict
         print curr
         if curr == None:
@@ -176,10 +175,30 @@ def handlerequest():
             for key in curr:
                 if key == name:
                     shelter["needs"][key] = amt
-        # return url_for("results")
-    else:
-        return redirect(url_for("dashboard"))
+        print shelter["needs"]
+        print curr
+        db_manager.set_shelter_data(int(request.form["id"]), "needs", curr)
+        print db_manager.get_shelter(int(request.form["id"]))
+    return render_template("results.html", shelter = shelter)
 
+@app.route("/updateinfo/", methods=["POST"])
+def updateinfo():
+    if "id" not in request.form:
+        return redirect(url_for("dashboard"))
+    else:
+        sid = int(request.form["id"])
+        print sid
+        shelter = db_manager.get_shelter(sid)
+        db_manager.set_shelter_data(sid,"name",request.form["name"])
+        db_manager.set_shelter_data(sid,"phone_number",request.form["num"])
+        address = request.form["address"]
+        # address = geocoder.google(address)
+        # address = address.latlng
+        db_manager.set_shelter_data(sid,"address",address)
+        db_manager.set_shelter_data(sid,"population",request.form["pop"])
+        db_manager.set_shelter_data(sid,"email",request.form["email"])
+        shelter =  db_manager.get_shelter(int(request.form["id"]))
+    return render_template("results.html", shelter = shelter)
 
 if __name__ == '__main__':
     app.debug = True
