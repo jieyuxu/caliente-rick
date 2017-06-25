@@ -14,30 +14,34 @@
 var map;
 
 var shelters = [];
+var markers = [];
+var infowindows = [];
 
-function register_shelter(name, phone, desc, lat, long){
-shelters.push( {name : name,
-phone : phone,
-desc : desc,
-lat : lat,
-long : long} );
+function register_shelter(name, phone, desc, lat, lon, id){
+    shelters.push( {name : name,
+		    phone : phone,
+		    desc : desc,
+		    lat : lat,
+		    lon : lon,
+		    id: id} );
 }
 
-function add_marker(latitude, longitude){
+function add_marker(latitude, longitude, name){
     console.log("im running");
     var marker = new google.maps.Marker({
 	position: {lat : latitude, lng : longitude},
 	map: map,
-	title: 'Hello World!'
+	title: name
     });
 
-return marker;
+    markers.push(marker);
+    return marker;
 }
 
 function formatPhoneNumber(s) {
-  var s2 = (""+s).replace(/\D/g, '');
-  var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
-  return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
+    var s2 = (""+s).replace(/\D/g, '');
+    var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+    return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
 }
 
 function initMap() {
@@ -46,32 +50,35 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
 	zoom: 13,
 	center: midtown
-});
-for (i = 0; i < shelters.length; i++){
-		shelter = shelters[i];
-		var marker = add_marker(shelter["lat"], shelter["long"]);
-		var contentString = '<div><div></div><h1 class="firstHeading">' +
-		shelter["name"] +
-		'</h1><div>' +
-		shelter["desc"] +
-		'<br>Phone Number: ' +
-		formatPhoneNumber(shelter["phone"]) + 
-		'</div></div>';
+    });
+    for (i = 0; i < shelters.length; i++){
+	shelter = shelters[i];
 
-		var infowindow = new google.maps.InfoWindow({
-		content: contentString
-		});
+	var marker = add_marker(shelter["lat"], shelter["lon"], shelter["name"]);
+	var content = '<div><div></div><h1 class="firstHeading">' +
+	    shelter["name"] +
+	    '</h1><div>' +
+	    shelter["desc"] +
+	    '<br>Phone Number: ' +
+	    formatPhoneNumber(shelter["phone"]) +
+	    '<br>' +
+	    '<form action=""><input type="hidden" name="id" value="' +
+	    shelter["id"] + 
+	    '"><input type="submit" value="See More"></form></div></div>';
 
-		marker.addListener('click', function() {
-		infowindow.open(map, marker);
-		});
+	var infowindow = new google.maps.InfoWindow();
+	google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+	    return function() {
+		infowindow.setContent(content);
+		infowindow.open(map,marker);
+	    };
+	})(marker,content,infowindow));  
+	
+    };
+    
 
-		
-		};
-		
+}
 
-		}
-		
     </script>
 
     <script async defer
@@ -165,7 +172,8 @@ for (i = 0; i < shelters.length; i++){
 	    {{ location["phone_number"] }},
 	    "{{ location['description'] }}",
 	    {{ location["address"]["latitude"] }},
-	    {{ location["address"]["longitude"] }}
+	    {{ location["address"]["longitude"] }},
+	    {{ location["id"] }}
 	    );
 	  </script>
 
