@@ -64,6 +64,26 @@ def set_shelter_data(shelter_id, field, value):
     db.shelters.update_one({"id" : shelter_id}, {"$set" : {field : value}})
     db.shelters.update_one({"id" : shelter_id}, {"$set" : {"last_updated" : get_time()}})
 
+
+
+def add_donation(email, shelter_id, product, amount):
+    db.donations.insert_one({"donor" : email,
+                             "shelter" : shelter_id,
+                             "product" : product,
+                             "amount" : amount,
+                             "status" : "pending"})
+    
+def get_donations(shelter_id):
+    ret = []
+    donations = db.donations.find({"shelter" : shelter_id})
+    if donations == None:
+        return ret
+    for donation in donations:
+        ret.append( {"product" : donation["product"],
+                     "amount" : donation["amount"],
+                     "donor" : donation["donor"]} )
+    return ret
+    
 def authenticate_user(email, hashed_input):
     user = get_user(email)
     if user == None:
