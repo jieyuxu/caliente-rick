@@ -10,6 +10,40 @@
 
     <script src="{{ url_for('static', filename='map.js')}}"></script>
 
+    <script>
+var map;
+
+var markers = [];
+
+function register_marker(latitude, longitude){
+    markers.push( {lat : latitude, lng : longitude} )
+}
+
+function add_marker(pos){
+    console.log("im running");
+    var marker = new google.maps.Marker({
+	position: pos,
+	map: map,
+	title: 'Hello World!'
+    });
+
+}
+
+function initMap() {
+    var midtown = {lat: 40.7561050, lng:-73.9869487};
+
+    map = new google.maps.Map(document.getElementById('map'), {
+	zoom: 13,
+	center: midtown
+    });
+    for (i = 0; i < markers.length; i++){
+	add_marker(markers[i]);
+
+    };
+}
+
+    </script>
+
     <script async defer
 		  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNjfxzJuAIph_75M8IyqwQVbGEBtt9B4E&callback=initMap">
     </script>
@@ -93,11 +127,14 @@
         <div role="tabpanel" class="tab-pane active" id="home">
 
 	  <div id="map"></div>
+
 	  {% for location in locations %}
 	  <script>
-	    add_marker(location["latitude"], location["longitude"]);
+	    register_marker({{location["latitude"]}}, {{location["longitude"]}});
 	  </script>
+
 	  {% endfor %}
+
 	</div>
 	<div role="tabpanel" class="tab-pane" id="profile">...</div>
         <div role="tabpanel" class="tab-pane" id="messages">...</div>
