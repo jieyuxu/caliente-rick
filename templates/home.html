@@ -1,10 +1,62 @@
 {% extends "base.html" %}
+{% block head %}
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<script type="text/JavaScript" id="slideshow" >
+<!--
+var picCount=0; // global
+var picArray= ["https://www.kcet.org/sites/kl/files/atoms/article_atoms/www.kcet.org/socal/departures/lariver/confluence/homeless%2520food%2520served%2520resized.jpg","http://macaulay.cuny.edu/eportfolios/runaways/files/2009/05/luckyshelternyt-002.jpg","http://image.morningjournal.com/storyimage/MJ/20161225/NEWS/161229662/EP/1/1/EP-161229662.jpg&maxh=400&maxw=667","http://image.dailynews.com/storyimage/LA/20161208/NEWS/161209526/AR/0/AR-161209526.jpg&maxh=400&maxw=667"]
+//
+// gets next picture in array
+function nextPic()
+{ // check if adding 1 exceeds number of pics in array
+picCount=(picCount+1<picArray.length)? picCount+1 : 0;
+// build the img to write to page using the new pic reference
+var build='<img border="0" src="'+picArray[picCount]+'" width="400" height="300">\
+';
+document.getElementById("imgHolder").innerHTML=build;
+// repeat this after a puse of 2000ms (2sec).
+setTimeout('nextPic()',3000)
+}
+//-->
+</script>
+
+<style>
+  #description{
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+  .jumbotron {
+    margin-top: -20px;
+    background-color: #5d8aa8;
+    color: whitesmoke;
+}
+ #picture{
+    margin-bottom: 40px;
+}
+ #projectname{
+    text-decoration: underline double;
+
+}
+  .left{
+    float:left;
+    width:33%;
+}
+#last{
+   text-align: center;
+}
+#slideshow{
+	padding-right: 200px;
+}
+
+</style>
+
+{% endblock %}
 {% block body %}
 
 
 
 <div class="jumbotron">
-  <h1 id = "projectname"><span style= "font-family:Cinzel">PROJECT CONNECTION</span>
+  <h1 class="display-1"><span style= "font-family:Cinzel">PROJECT CONNECTION</span>
 	<img id = "picture" src ="http://findicons.com/files/icons/1580/devine_icons_part_2/128/home_w.png"/></h1>
 
   <p id="description"><i>The best way for individual donors and homeless shelters to connect with one another, helping streamline the donating process and providing to those in need.</i></p>
@@ -29,68 +81,19 @@
   </div>
 </div>
 <div class="left">
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-<script type="text/JavaScript" id="slideshow" >
-<!--
-var picCount=0; // global
-var picArray= ["https://www.kcet.org/sites/kl/files/atoms/article_atoms/www.kcet.org/socal/departures/lariver/confluence/homeless%2520food%2520served%2520resized.jpg","http://macaulay.cuny.edu/eportfolios/runaways/files/2009/05/luckyshelternyt-002.jpg","http://image.morningjournal.com/storyimage/MJ/20161225/NEWS/161229662/EP/1/1/EP-161229662.jpg&maxh=400&maxw=667","http://image.dailynews.com/storyimage/LA/20161208/NEWS/161209526/AR/0/AR-161209526.jpg&maxh=400&maxw=667"]
-//
-// gets next picture in array
-function nextPic()
-{ // check if adding 1 exceeds number of pics in array
-picCount=(picCount+1<picArray.length)? picCount+1 : 0;
-// build the img to write to page using the new pic reference
-var build='<img border="0" src="'+picArray[picCount]+'" width="400" height="300">\
-';
-document.getElementById("imgHolder").innerHTML=build;
-// repeat this after a puse of 2000ms (2sec).
-setTimeout('nextPic()',3000)
-}
-//-->
-</script>
 
-<title>Image Swap Static</title>
-</head>
 
-<body onload="setTimeout('nextPic()',2000)">
+  <title>Image Swap Static</title>
+  <body onload="setTimeout('nextPic()',2000)">
 
-<div id="imgHolder">
-<img border="0" src="img1.gif" width="205" height="100">
-</div>
+  <div id="imgHolder">
+    <img border="0" src="img1.gif" width="205" height="100">
+  </div>
 </div>
 <div class = "left" id= "last">
 <h3> Make sure to check out your dashboard after logging in to see shelters near you and how you can help! </h3>
 </div>
 </body>
-<style>
-  #description{
-    padding-left: 15%;
-    padding-right: 15%;
-  }
-  .jumbotron {
-    margin-top: -20px;
-    background-color: #5d8aa8;
-    color: whitesmoke;
-}
- #picture{
-    margin-bottom: 40px;
-}
- #projectname{
-    text-decoration: underline double;
- 
-}
-  .left{
-    float:left;
-    width:33%;
-}
-#last{
-   text-align: center;
-}
-#slideshow{
-	padding-right: 200px;
-}
-  
-</style>
-  
+
 
 {% endblock %}
