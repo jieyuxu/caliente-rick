@@ -17,12 +17,13 @@ var shelters = [];
 var markers = [];
 var infowindows = [];
 
-function register_shelter(name, phone, desc, lat, lon){
+function register_shelter(name, phone, desc, lat, lon, id){
     shelters.push( {name : name,
 		    phone : phone,
 		    desc : desc,
 		    lat : lat,
-		    lon : lon} );
+		    lon : lon,
+		    id: id} );
 }
 
 function add_marker(latitude, longitude, name){
@@ -59,8 +60,11 @@ function initMap() {
 	    '</h1><div>' +
 	    shelter["desc"] +
 	    '<br>Phone Number: ' +
-	    formatPhoneNumber(shelter["phone"]) + 
-	    '</div></div>';
+	    formatPhoneNumber(shelter["phone"]) +
+	    '<br>' +
+	    '<form action=""><input type="hidden" name="id" value="' +
+	    shelter["id"] + 
+	    '"><input type="submit" value="See More"></form></div></div>';
 
 	var infowindow = new google.maps.InfoWindow();
 	google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
@@ -168,7 +172,8 @@ function initMap() {
 	    {{ location["phone_number"] }},
 	    "{{ location['description'] }}",
 	    {{ location["address"]["latitude"] }},
-	    {{ location["address"]["longitude"] }}
+	    {{ location["address"]["longitude"] }},
+	    {{ location["id"] }}
 	    );
 	  </script>
 
