@@ -41,12 +41,13 @@ def get_shelter(shelter_id):
 #             "diapers" : 10}
 #  "last_updated" : 2017-06-24 12:55     //datetime object
 # }
-def add_shelter(shelter_info):
+def add_shelter(email, shelter_info):
     shelter_info["last_updated"] = get_time()
     # shelter_id = uuid.uuid4().int
     shelter_id = random.randrange(1,10000)
     shelter_info["id"] = shelter_id
     db.shelters.insert_one(shelter_info)
+    db.users.update_one({"email" : email}, {"$push" : {"shelters" : shelter_id}})
     return shelter_id
 
 def get_all_shelters():
