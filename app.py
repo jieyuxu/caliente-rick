@@ -89,7 +89,7 @@ def dashboard():
         print "woooooooooooooooooooooooooooooooooo"
         locations = db_manager.get_shelter_locations()
         print locations
-        return render_template("dashboard.html", donor=True)
+        return render_template("dashboard.html", donor=True, locations=locations)
     elif usr["type"] == "director":
         ret = []
         info = usr["shelters"]
