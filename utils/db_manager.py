@@ -53,8 +53,8 @@ def get_shelter_locations():
     locations = []
     cursor = db.shelters.find({})
     for shelter in cursor:
-        locations.append({ "latitude" : shelter["latitude"],
-                           "longitude" : shelter["longitude"]})
+        locations.append({ "latitude" : shelter["address"]["latitude"],
+                           "longitude" : shelter["address"]["longitude"]})
     return locations
 
 def set_user_data(email, field, value):

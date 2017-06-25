@@ -9,35 +9,37 @@
     </style>
 
     <script>
-
 var map;
 
+var markers = [];
 
-function add_marker(latitude, longitude){
-  var marker = new google.maps.Marker({
-    position: {lat : latitude, lng : longitude},
-    map: map,
-    title: 'Hello World!'
-  });
+function register_marker(latitude, longitude){
+    markers.push( {lat : latitude, lng : longitude} )
+}
+
+function add_marker(pos){
+    console.log("im running");
+    var marker = new google.maps.Marker({
+	position: pos,
+	map: map,
+	title: 'Hello World!'
+    });
 
 }
 
 function initMap() {
-var midtown = {lat: 40.7561050, lng:-73.9869487};
+    var midtown = {lat: 40.7561050, lng:-73.9869487};
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 13,
-    center: midtown
-});
-
-add_marker(midtown.lat, midtown.lng);
-
-ppp = {lat: 40.743508, lng:-73.999774};
-
-add_marker(ppp.lat, ppp.lng);
-
+    map = new google.maps.Map(document.getElementById('map'), {
+	zoom: 13,
+	center: midtown
+    });
+    for (i = 0; i < markers.length; i++){
+	add_marker(markers[i]);
+	
+    };
 }
-            
+
     </script>
 	  
     <script async defer
@@ -127,7 +129,7 @@ add_marker(ppp.lat, ppp.lng);
 
 	  {% for location in locations %}
 	  <script>
-	    add_marker({{location["latitude"]}}, {{location["longitude"]}});
+	    register_marker({{location["latitude"]}}, {{location["longitude"]}});
 	  </script>
 
 	  {% endfor %}
