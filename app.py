@@ -112,17 +112,20 @@ def add():
         address = "%s,%s,%s,%s" % (request.form["street"].strip(), request.form["city"].strip(), request.form["state"].strip(),request.form["zip"].strip())
         address = geocoder.google(address)
         address = address.latlng
-        print address
+        print address[0]
+        print address[1]
+
         shelter = {}
         shelter.update({"name" : request.form["name"]})
         shelter.update({"description" : request.form["des"]})
-        shelter.update({"address" : address})
+        shelter.update({"address" : {"latitude": address[0], "longitude": address[1]} })
         shelter.update({"phone_number" : request.form["num"]})
         shelter.update({"population" : request.form["pop"]})
         shelter.update({"directors" : session["user"]})
         shelter.update({"needs" : {}})
         # shelter.update({"last_updated" : db_manager.get_time()})
         # shelter.update({"id" : uuid.uuid4().int})
+        print shelter
         sid = db_manager.add_shelter(shelter)
         print sid
         print db_manager.get_shelter(sid)
