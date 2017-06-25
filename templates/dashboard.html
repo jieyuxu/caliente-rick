@@ -63,19 +63,19 @@ function initMap() {
 	    formatPhoneNumber(shelter["phone"]) +
 	    '<br>' +
 	    '<form action=""><input type="hidden" name="id" value="' +
-	    shelter["id"] + 
+	    shelter["id"] +
 	    '"><input type="submit" value="See More"></form></div></div>';
 
 	var infowindow = new google.maps.InfoWindow();
-	google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+	google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
 	    return function() {
 		infowindow.setContent(content);
 		infowindow.open(map,marker);
 	    };
-	})(marker,content,infowindow));  
-	
+	})(marker,content,infowindow));
+
     };
-    
+
 
 }
 
@@ -94,9 +94,9 @@ function initMap() {
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+        <!-- <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li> -->
         <li role="presentation"><a href="#add" aria-controls="add" role="tab" data-toggle="tab">Add Shelter</a></li>
-        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+        <!-- <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li> -->
       </ul>
 
       <!-- Tab panes -->

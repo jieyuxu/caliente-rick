@@ -192,6 +192,8 @@ def updateinfo():
         db_manager.set_shelter_data(sid,"name",request.form["name"])
         db_manager.set_shelter_data(sid,"phone_number",request.form["num"])
         address = request.form["address"]
+        latitude, longitude = address.split(",")
+        address = {"latitude": latitude, "longitude": longitude}
         # address = geocoder.google(address)
         # address = address.latlng
         db_manager.set_shelter_data(sid,"address",address)

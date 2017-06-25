@@ -14,7 +14,7 @@
       <p>
         Name: {{shelter["name"]}} <br/>
         Phone #: {{shelter["phone_number"]}}<br/>
-        Address: {{shelter["address"]}}<br/>
+        Address: {{shelter["address"]["latitude"]}}, {{shelter["address"]["longitude"]}}<br/>
         # of People Serving: {{shelter["population"]}}<br/>
         Email: {{shelter["directors"]}}
       </p>
@@ -67,7 +67,7 @@
                 <i>Your current information has been filled in for you. Please change the fields that are no longer accurate.</i><br/><br/>
                 <label for="name" class="col-2 col-form-label">Name: </label><input class="form-control" type="text" name="name" value="{{shelter["name"]}}" required><br>
                 <label for="num" class="col-2 col-form-label">Phone Number: </label><br/><i>Please do not enter any symbols. Ex: 123456789</i><input class="form-control" type="text" name="num" value="{{shelter["phone_number"]}}" required> <br>
-                <label for="address" class="col-2 col-form-label">Address: </label><br/><i>Please enter latitude and longitude coordinates in the [ {lat.} , {lng.} ] format</i><input class="form-control" type="text" name="address" value="{{shelter["address"]}}" required> <br>
+                <label for="address" class="col-2 col-form-label">Address: </label><br/><i>Please enter latitude and longitude coordinates in this format: latitude, longitude. Ex: 123.54,54.21</i><input class="form-control" type="text" name="address" value="{{shelter["address"]["latitude"]}}, {{shelter["address"]["longitude"]}}" required> <br>
                 <label for="pop" class="col-2 col-form-label"># of People Serving: </label><input class="form-control" type="text" name="pop" value="{{shelter["population"]}}" required> <br>
                 <label for="email" class="col-2 col-form-label">Email: </label><input class="form-control" type="text" name="email" value="{{shelter["directors"]}}" required> <br>
                 <input type="hidden" name="id" value="{{ shelter['id'] }}">
