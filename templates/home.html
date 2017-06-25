@@ -5,7 +5,7 @@
 
 <div class="jumbotron">
   <h1>Project Name</h1>
-  <p id="description">Team Caliente Rick, composed of Anika Kathuria, Kika , Amy Xu, and Haley Zeng present _____________, a resource to connect individual donors to homeless shelters. Potential donors are able to see the specific needs of shelters in their area, making the donation process much more transparent.</p>
+  <p id="description">Team Caliente Rick, composed of Anika Kathuria, Kika Kovaleski, Amy Xu, and Haley Zeng present _____________, a resource to connect individual donors to homeless shelters. Potential donors are able to see the specific needs of shelters in their area, making the donation process much more transparent.</p>
 </div>
 
 <div class="container">
@@ -25,5 +25,56 @@
     </div>
   </div>
 </div>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<script type="text/JavaScript">
+<!--
+var picCount=0; // global
+var picArray= ["https://www.kcet.org/sites/kl/files/atoms/article_atoms/www.kcet.org/socal/departures/lariver/confluence/homeless%2520food%2520served%2520resized.jpg","http://macaulay.cuny.edu/eportfolios/runaways/files/2009/05/luckyshelternyt-002.jpg","http://image.morningjournal.com/storyimage/MJ/20161225/NEWS/161229662/EP/1/1/EP-161229662.jpg&maxh=400&maxw=667","http://image.dailynews.com/storyimage/LA/20161208/NEWS/161209526/AR/0/AR-161209526.jpg&maxh=400&maxw=667"]
+//
+// gets next picture in array
+function nextPic()
+{ // check if adding 1 exceeds number of pics in array
+picCount=(picCount+1<picArray.length)? picCount+1 : 0;
+// build the img to write to page using the new pic reference
+var build='<img border="0" src="'+picArray[picCount]+'" width="600" height="400">\
+';
+document.getElementById("imgHolder").innerHTML=build;
+// repeat this after a puse of 2000ms (2sec).
+setTimeout('nextPic()',3000)
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+
+imgHolder{ position:absolute; top:100px; left:100px; text-align:left; }
+.LgR { color:#F00; font-size:30px; font-weight:bold; line-height:130%; background-color:#FFF; }
+.a18B { color:#792D99; font-size:18px; font-weight:bold; background-color:#FFF; }
+-->
+</style>
+<title>Image Swap Static</title>
+</head>
+
+<body onload="setTimeout('nextPic()',2000)">
+
+<div id="imgHolder">
+<img border="0" src="img1.gif" width="205" height="100">
+</div>
+<br>
+</body>
+<style>
+  #description{
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+  .jumbotron {
+  background-color: white;
+}
+.main-button {
+  display: inline-block;
+
+}
+</style>
+  
 
 {% endblock %}

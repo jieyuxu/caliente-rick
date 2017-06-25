@@ -51,8 +51,8 @@ def add_shelter(shelter_info):
 
 def get_shelter_locations():
     locations = []
-    shelters = db["shelters"]
-    for shelter in shelters:
+    cursor = db.shelters.find({})
+    for shelter in cursor:
         locations.append({ "latitude" : shelter["latitude"],
                            "longitude" : shelter["longitude"]})
     return locations

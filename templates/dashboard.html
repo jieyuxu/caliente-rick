@@ -8,6 +8,12 @@
        }
     </style>
 
+    <script src="{{ url_for('static', filename='map.js')}}"></script>
+	  
+    <script async defer
+		  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNjfxzJuAIph_75M8IyqwQVbGEBtt9B4E&callback=initMap">
+    </script>
+    
 {% endblock %}
 
 {% block body %}
@@ -88,11 +94,11 @@
         <div role="tabpanel" class="tab-pane active" id="home">
 
 	  <div id="map"></div>
-	  <script src="{{ url_for('static', filename='map.js')}}"></script>
-	  <script async defer
-		  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNjfxzJuAIph_75M8IyqwQVbGEBtt9B4E&callback=initMap">
+	  {% for location in locations %}
+	  <script>
+	    add_marker(location["latitude"], location["longitude"]);
 	  </script>
-
+	  {% endfor %}
 	</div>
 	<div role="tabpanel" class="tab-pane" id="profile">...</div>
         <div role="tabpanel" class="tab-pane" id="messages">...</div>
