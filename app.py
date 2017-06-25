@@ -154,10 +154,32 @@ def add():
 
 @app.route("/results/<code>")
 def results(code):
-    data = db_manager.get_shelter("2659")
-    print code
-    print data
+    data = db_manager.get_shelter(int(code))
     return render_template("results.html", shelter = data)
+
+@app.route("/request/", methods=["POST"])
+def handlerequest():
+    if ("request_submit" in request.form) and ("request_name" in request.form) and ("request_amt" in request.form):
+        name = request.form["request_name"]
+        amt = request.form["request_amt"]
+        d = {request.form["request_name"]: request.form["request_amt"]}
+        shelter = db_manager.get_shelter(int(request.form["id"]))
+        print shelter
+        curr = shelter["needs"] #gets dict
+        print curr
+        if curr == None:
+            curr = {}
+        print curr
+        if name not in curr:
+            curr.update({name:amt})
+        else:
+            for key in curr:
+                if key == name:
+                    shelter["needs"][key] = amt
+        # return url_for("results")
+    else:
+        return redirect(url_for("dashboard"))
+
 
 if __name__ == '__main__':
     app.debug = True
