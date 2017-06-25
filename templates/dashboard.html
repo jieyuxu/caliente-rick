@@ -11,16 +11,16 @@
     <script>
 var map;
 
-var markers = [];
+var shelters = [];
 
-function register_marker(latitude, longitude){
-    markers.push( {lat : latitude, lng : longitude} )
+function register_shelter(d){
+   shelters.push( d );
 }
 
-function add_marker(pos){
+function add_marker(latitude, longitude){
     console.log("im running");
     var marker = new google.maps.Marker({
-	position: pos,
+	position: {lat : latitude, lng : longitude},
 	map: map,
 	title: 'Hello World!'
     });
@@ -34,8 +34,8 @@ function initMap() {
 	zoom: 13,
 	center: midtown
     });
-    for (i = 0; i < markers.length; i++){
-	add_marker(markers[i]);
+    for (i = 0; i < shelters.length; i++){
+	add_marker(shelters[i]["latitude"], shelters[i]["longitude"]);
 	
     };
 }
@@ -129,7 +129,7 @@ function initMap() {
 
 	  {% for location in locations %}
 	  <script>
-	    register_marker({{location["latitude"]}}, {{location["longitude"]}});
+	    register_marker({{location["address"]["latitude"]}}, {{location["address"]["longitude"]}});
 	  </script>
 
 	  {% endfor %}

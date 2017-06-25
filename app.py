@@ -86,7 +86,7 @@ def dashboard():
         return redirect(url_for("auth"))
     if usr["type"] == "donor":
         print "woooooooooooooooooooooooooooooooooo"
-        locations = db_manager.get_shelter_locations()
+        locations = db_manager.get_all_shelters();
         print locations
         return render_template("dashboard.html", donor=True, locations=locations)
     elif usr["type"] == "director":
