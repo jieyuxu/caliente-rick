@@ -16,7 +16,7 @@
           Confirm Password:&thinsp; <input class="form-control" type="password" name="cpassword" required> <br>
           Type:<br/> <input type="radio" name="type" value="donor">&ensp;Donor<br>
           <input type="radio" name="type" value="director">&ensp;Homeless Shelter<br>
-          <input class="btn btn-success btn-block" type="submit" name="register" value="register" action="submit">
+          <input class="btn btn-success btn-block" type="submit" name="register" value="register" action="submit" style="margin-top: 20px;">
         </form>
         </div>
         <!--Register-->
@@ -31,4 +31,10 @@
         </div>
     </div>
   </div>
+<style>
+  input[type=checkbox], input[type=radio] {
+    margin: 16px 0 0;
+  }
+  
+</style>
 {% endblock %}
