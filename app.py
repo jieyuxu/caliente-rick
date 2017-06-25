@@ -6,9 +6,15 @@ import datetime
 from httplib2 import Http # The http library to issue REST calls to the oauth api
 import json # Json library to handle replies
 import geocoder
+from datetime import timedelta
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32)
+app.secret_key = "secret"
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=1000)
 
 @app.route("/")
 def home():
@@ -34,7 +40,6 @@ def login():
             result, msg = db_manager.authenticate_user(email, passw)
             if result == True:
                 session["user"] = email
-                print session["user"]
                 return redirect(url_for("dashboard"))
         return render_template("authenticate.html", msg = msg)
 
@@ -48,6 +53,8 @@ def login():
 # }
 @app.route("/register/", methods=["POST"])
 def register():
+    if "user" in session:
+        return redirect(url_for("dashboard"))
     if request.form["register"]:
         if hashlib.sha512(request.form["password"]).hexdigest() != hashlib.sha512(request.form["cpassword"]).hexdigest():
             return redirect(url_for("auth"), msg = "Passwords don't match.")
@@ -57,6 +64,7 @@ def register():
         user.update({"last_name" : request.form["last"]})
         user.update({"password" : hashlib.sha512(request.form["password"]).hexdigest()})
         user.update({"type" : request.form["type"]})
+        user.update({"shelters" : []})
         db_manager.add_user(user)
         return redirect(url_for("auth"))
     else:
@@ -72,19 +80,31 @@ def logout():
 def dashboard():
     if "user" not in session:
         return redirect(url_for("auth"))
-    print db_manager.get_user(session["user"])
-    print db_manager.get_user(session["user"])["type"]
-    if db_manager.get_user(session["user"])["type"] == None:
+    usr = db_manager.get_user(session["user"])
+    print usr
+    if usr["type"] == None:
         return redirect(url_for("auth"))
-    if db_manager.get_user(session["user"])["type"] == "donor":
+    if usr["type"] == "donor":
         return render_template("dashboard.html", donor=True)
-    elif db_manager.get_user(session["user"])["type"] == "director":
-        return render_template("dashboard.html", director = True)
+    elif usr["type"] == "director":
+        ret = []
+        info = usr["shelters"]
+        print info
+        if info == None:
+            return render_template("dashboard.html", director = True)
+        else:
+            for code in info:
+                print db_manager.get_shelter(code)
+                ret.append(db_manager.get_shelter(code))
+            print "return is below"
+            print ret
+            return render_template("dashboard.html", director = True, shelters = ret)
     else:
         return redirect(url_for("auth"))
 
 @app.route("/add/", methods=["POST"])
 def add():
+    email = session["user"]
 #       Shelter Name: <input class="form-control" type="text" name="name" required> <br>
 # Description: <input class="form-control" type="text" name="des" required> <br>
 # Street Address: <input class="form-control" type="text" name="street" required> <br>
@@ -112,8 +132,6 @@ def add():
         address = "%s,%s,%s,%s" % (request.form["street"].strip(), request.form["city"].strip(), request.form["state"].strip(),request.form["zip"].strip())
         address = geocoder.google(address)
         address = address.latlng
-        print address[0]
-        print address[1]
 
         shelter = {}
         shelter.update({"name" : request.form["name"]})
@@ -125,10 +143,12 @@ def add():
         shelter.update({"needs" : {}})
         # shelter.update({"last_updated" : db_manager.get_time()})
         # shelter.update({"id" : uuid.uuid4().int})
-        print shelter
         sid = db_manager.add_shelter(shelter)
-        print sid
-        print db_manager.get_shelter(sid)
+        insert = db_manager.get_user(session["user"])["shelters"]
+        if insert == None:
+            insert = []
+        insert = insert.append(sid)
+        db_manager.set_user_data(session["user"], "shelters", insert)
     return redirect(url_for("dashboard"))
 
 if __name__ == '__main__':

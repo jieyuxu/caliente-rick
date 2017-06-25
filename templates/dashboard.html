@@ -25,7 +25,17 @@
       <!-- Tab panes -->
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
-
+          {% for shelter in shelters%}
+            {{shelter}}
+            <div class="panel panel-primary">
+              <div class="panel-heading">{{shelter["name"]}}</div>
+              <div class="panel-body">
+                {% for item in shelter%}
+                  {{item}}: {{shelter[item]}}
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
         </div>
         <div role="tabpanel" class="tab-pane" id="profile">...</div>
         <div role="tabpanel" class="tab-pane" id="add">

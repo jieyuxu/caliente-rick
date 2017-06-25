@@ -28,12 +28,13 @@
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/authenticate/">Register/Login</a></li>
+          {% if session["user"]%}<li><a href="/logout/">Logout</a></li>
+          {% else %}<li><a href="/authenticate/">Register/Login</a></li>
+          {%endif%}
         </ul>
       </div><!-- /.navbar-collapse -->
       <ul class="nav navbar-nav navbar-right">
-        {% if session["student"] or session["admin"] or session["super_admin"]%}<li><a href="/logout/">Logout</a></li>
-        {%endif%}
+
       </ul>
     </div>
   </div>
