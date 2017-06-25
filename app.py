@@ -5,6 +5,7 @@ import os, sys, random, uuid
 import datetime
 from httplib2 import Http # The http library to issue REST calls to the oauth api
 import json # Json library to handle replies
+import geocoder
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -108,13 +109,14 @@ def add():
 #             "diapers" : 10}
 #  "last_updated" : 2017-06-24 12:55     //datetime object
     if "submit" in request.form:
+        address = "%s,%s,%s,%s" % (request.form["street"].strip(), request.form["city"].strip(), request.form["state"].strip(),request.form["zip"].strip())
+        address = geocoder.google(address)
+        address = address.latlng
+        print address
         shelter = {}
         shelter.update({"name" : request.form["name"]})
         shelter.update({"description" : request.form["des"]})
-        shelter.update({"address_zip_code" : request.form["zip"]})
-        shelter.update({"address_city" : request.form["city"]})
-        shelter.update({"address_state": request.form["state"]})
-        shelter.update({"address_street": request.form["street"]})
+        shelter.update({"address" : address})
         shelter.update({"phone_number" : request.form["num"]})
         shelter.update({"population" : request.form["pop"]})
         shelter.update({"directors" : session["user"]})
