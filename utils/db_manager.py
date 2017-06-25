@@ -49,12 +49,11 @@ def add_shelter(shelter_info):
     db.shelters.insert_one(shelter_info)
     return shelter_id
 
-def get_shelter_locations():
+def get_all_shelters():
     locations = []
     cursor = db.shelters.find({})
     for shelter in cursor:
-        locations.append({ "latitude" : shelter["address"]["latitude"],
-                           "longitude" : shelter["address"]["longitude"]})
+        locations.append(shelter)
     return locations
 
 def set_user_data(email, field, value):

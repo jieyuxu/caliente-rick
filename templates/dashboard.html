@@ -13,20 +13,31 @@
     <script>
 var map;
 
-var markers = [];
+var shelters = [];
 
-function register_marker(latitude, longitude){
-    markers.push( {lat : latitude, lng : longitude} )
+function register_shelter(name, phone, desc, lat, long){
+shelters.push( {name : name,
+phone : phone,
+desc : desc,
+lat : lat,
+long : long} );
 }
 
-function add_marker(pos){
+function add_marker(latitude, longitude){
     console.log("im running");
     var marker = new google.maps.Marker({
-	position: pos,
+	position: {lat : latitude, lng : longitude},
 	map: map,
 	title: 'Hello World!'
     });
 
+return marker;
+}
+
+function formatPhoneNumber(s) {
+  var s2 = (""+s).replace(/\D/g, '');
+  var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+  return (!m) ? null : "(" + m[1] + ") " + m[2] + "-" + m[3];
 }
 
 function initMap() {
@@ -35,13 +46,32 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
 	zoom: 13,
 	center: midtown
-    });
-    for (i = 0; i < markers.length; i++){
-	add_marker(markers[i]);
+});
+for (i = 0; i < shelters.length; i++){
+		shelter = shelters[i];
+		var marker = add_marker(shelter["lat"], shelter["long"]);
+		var contentString = '<div><div></div><h1 class="firstHeading">' +
+		shelter["name"] +
+		'</h1><div>' +
+		shelter["desc"] +
+		'<br>Phone Number: ' +
+		formatPhoneNumber(shelter["phone"]) + 
+		'</div></div>';
 
-    };
-}
+		var infowindow = new google.maps.InfoWindow({
+		content: contentString
+		});
 
+		marker.addListener('click', function() {
+		infowindow.open(map, marker);
+		});
+
+		
+		};
+		
+
+		}
+		
     </script>
 
     <script async defer
@@ -130,7 +160,13 @@ function initMap() {
 
 	  {% for location in locations %}
 	  <script>
-	    register_marker({{location["latitude"]}}, {{location["longitude"]}});
+	    register_shelter(
+	    "{{ location['name'] }}",
+	    {{ location["phone_number"] }},
+	    "{{ location['description'] }}",
+	    {{ location["address"]["latitude"] }},
+	    {{ location["address"]["longitude"] }}
+	    );
 	  </script>
 
 	  {% endfor %}
