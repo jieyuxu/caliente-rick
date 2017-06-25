@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block body %}
+<a href="/dashboard/"><button type="button" class="btn btn-primary btn-lg">Return to Dashboard</button></a>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Shelter Details</h3>
+      <p>
+        Name: {{shelter["name"]}} <br/>
+        Phone #: {{shelter["phone_number"]}}<br/>
+        Address: {{shelter["address"]["latitude"]}}, {{shelter["address"]["longitude"]}}<br/>
+        # of People Serving: {{shelter["population"]}}<br/>
+        Email: {{shelter["directors"]}}
+      </p>
+      <hr>
+      <h3>Request</h3>
+      <p>
+        {{item}}: {{amt}}
+      </p>
+      <!-- <input class="btn btn-primary btn-lg" type="button" name="modal" value="Make a New Request"> -->
+    </div>
+    <div class="col-md-6">
+      <h3>Donation to this Request</h3>
+      <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal1">Donation</button>
+      <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel2">Donate</h4>
+            </div>
+            <div class="modal-body">
+              <form action="/send/" method="POST">
+                <label for="amt" class="col-2 col-form-label">How Much: </label><input class="form-control" type="number" name="damt" min="1" max="{{amt}}" required><br>
+                <label for="fname" class="col-2 col-form-label">First Name: </label><br/><input class="form-control" type="text" name="fname" value="{{usr["first_name"]}}" readonly> <br>
+                <label for="lname" class="col-2 col-form-label">Last Name: </label><input class="form-control" type="text" name="lname" value="{{usr["last_name"]}}" readonly> <br>
+                <label for="email" class="col-2 col-form-label">Email: </label><input class="form-control" type="text" name="email" value="{{usr["email"]}}" readonly> <br>
+                <input type="hidden" name="id" value="{{ shelter['id'] }}">
+                <input type="hidden" name="item" value="{{ item }}">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <input type="submit" class="btn btn-primary" name="request_submit" value="Request">
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

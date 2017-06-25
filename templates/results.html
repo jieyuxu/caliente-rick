@@ -82,6 +82,21 @@
       </div>
     </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Show Donation Offers</h3>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            {% for dict in donations%}
+            <p>{% for key in dict%}
+                  {{key}}: {{ dict[key] }} </p><br/>
+               {% endfor %}<hr/>
+            {% endfor %}
+        </div>
+      </div>
+
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

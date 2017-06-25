@@ -155,7 +155,9 @@ def add():
 @app.route("/results/<code>")
 def results(code):
     data = db_manager.get_shelter(int(code))
-    return render_template("results.html", shelter = data)
+    donations = db_manager.get_donations(int(code))
+    print donations
+    return render_template("results.html", shelter = data, donations=donations)
 
 @app.route("/request/", methods=["POST"])
 def handlerequest():
@@ -212,9 +214,28 @@ def seeinfo():
         sid = int(request.form["id"])
         print sid
         shelter = db_manager.get_shelter(sid)
-    return render_template("view.html", shelter = shelter)
+        usr = db_manager.get_user(session["user"])
+    return render_template("view.html", shelter = shelter, usr = usr)
 
+@app.route("/help/", methods=["POST"])
+def help():
+    sid = int(request.form["id"])
+    item = request.form["item"]
+    amt = int(request.form["amt"])
+    usr = db_manager.get_user(session["user"])
+    shelter = db_manager.get_shelter(sid)
+    return render_template("help.html", item=item, amt=amt, usr=usr, shelter=shelter)
 
+@app.route("/send/", methods=["POST"])
+def send():
+    #add_donation(email, shelter_id, product, amount):
+    amt = request.form["damt"]
+    first = request.form["fname"]
+    last = request.form["lname"]
+    email = request.form["email"]
+    print amt,first,last,email,request.form["id"], request.form["item"]
+    db_manager.add_donation(email, int(request.form["id"]), request.form["item"],amt)
+    return redirect(url_for("dashboard"))
 if __name__ == '__main__':
     app.debug = True
     app.run()
