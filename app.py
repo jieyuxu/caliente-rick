@@ -133,14 +133,14 @@ def add():
 #             "diapers" : 10}
 #  "last_updated" : 2017-06-24 12:55     //datetime object
     if "submit" in request.form:
-        address = "%s,%s,%s,%s" % (request.form["street"].strip(), request.form["city"].strip(), request.form["state"].strip(),request.form["zip"].strip())
-        address = geocoder.google(address)
+        addressText = "%s,%s,%s,%s" % (request.form["street"].strip(), request.form["city"].strip(), request.form["state"].strip(),request.form["zip"].strip())
+        address = geocoder.google(addressText)
         address = address.latlng
 
         shelter = {}
         shelter.update({"name" : request.form["name"]})
         shelter.update({"description" : request.form["des"]})
-        shelter.update({"address" : {"latitude": address[0], "longitude": address[1]} })
+        shelter.update({"address" : {"latitude": address[0], "longitude": address[1], "text" : addressText} })
         shelter.update({"phone_number" : request.form["num"]})
         shelter.update({"population" : request.form["pop"]})
         shelter.update({"directors" : session["user"]})
