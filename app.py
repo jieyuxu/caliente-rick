@@ -85,24 +85,24 @@ def dashboard():
     if usr["type"] == None:
         return redirect(url_for("auth"))
     if usr["type"] == "donor":
-    if db_manager.get_user(session["user"])["type"] == "donor":
         print "woooooooooooooooooooooooooooooooooo"
         locations = db_manager.get_shelter_locations()
         print locations
         return render_template("dashboard.html", donor=True)
     elif usr["type"] == "director":
+        print "im inside director"
         ret = []
         info = usr["shelters"]
         print info
         if info == None:
-            return render_template("dashboard.html", director = True)
+            return render_template("dashboard.html", director = True, msg="No shelters under your account")
         else:
             for code in info:
                 print db_manager.get_shelter(code)
                 ret.append(db_manager.get_shelter(code))
             print "return is below"
             print ret
-            return render_template("dashboard.html", director = True, shelters = ret)
+            return render_template("dashboard.html", director = True, shelters = ret, geofxn = geocoder.google)
     else:
         return redirect(url_for("auth"))
 
@@ -145,15 +145,19 @@ def add():
         shelter.update({"population" : request.form["pop"]})
         shelter.update({"directors" : session["user"]})
         shelter.update({"needs" : {}})
+        print shelter
         # shelter.update({"last_updated" : db_manager.get_time()})
         # shelter.update({"id" : uuid.uuid4().int})
-        sid = db_manager.add_shelter(shelter)
-        insert = db_manager.get_user(session["user"])["shelters"]
-        if insert == None:
-            insert = []
-        insert = insert.append(sid)
-        db_manager.set_user_data(session["user"], "shelters", insert)
+        db_manager.add_shelter(session["user"], shelter)
+
     return redirect(url_for("dashboard"))
+
+@app.route("/results/<code>")
+def results(code):
+    data = db_manager.get_shelter("2659")
+    print code
+    print data
+    return render_template("results.html", shelter = data)
 
 if __name__ == '__main__':
     app.debug = True

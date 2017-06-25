@@ -8,12 +8,6 @@
        }
     </style>
 
-    <script src="{{ url_for('static', filename='map.js')}}"></script>
-
-    <script async defer
-		  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNjfxzJuAIph_75M8IyqwQVbGEBtt9B4E&callback=initMap">
-    </script>
-
 {% endblock %}
 
 {% block body %}
@@ -32,15 +26,6 @@
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="home">
 
-          <h3>Your Shelters</h3>
-          {% for shelter in shelters%}
-            <div class="panel panel-default">
-              <div class="panel-heading"><a href="/results/{{shelter['id']}}">{{shelter["name"]}}</a></div>
-              <div class="panel-body">
-                {{shelter["description"]}}
-              </div>
-            </div>
-          {% endfor %}
         </div>
         <div role="tabpanel" class="tab-pane" id="profile">...</div>
         <div role="tabpanel" class="tab-pane" id="add">
@@ -93,11 +78,11 @@
         <div role="tabpanel" class="tab-pane active" id="home">
 
 	  <div id="map"></div>
-	  {% for location in locations %}
-	  <script>
-	    add_marker(location["latitude"], location["longitude"]);
+	  <script src="{{ url_for('static', filename='map.js')}}"></script>
+	  <script async defer
+		  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNjfxzJuAIph_75M8IyqwQVbGEBtt9B4E&callback=initMap">
 	  </script>
-	  {% endfor %}
+
 	</div>
 	<div role="tabpanel" class="tab-pane" id="profile">...</div>
         <div role="tabpanel" class="tab-pane" id="messages">...</div>
