@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 import datetime
 import uuid
+import math
+import random
 
 server = MongoClient()
 db = server["rick"]
@@ -41,7 +43,8 @@ def get_shelter(shelter_id):
 # }
 def add_shelter(shelter_info):
     shelter_info["last_updated"] = get_time()
-    shelter_id = uuid.uuid4().int
+    # shelter_id = uuid.uuid4().int
+    shelter_id = random.randrange(1,10000)
     shelter_info["id"] = shelter_id
     db.shelters.insert_one(shelter_info)
     return shelter_id
@@ -52,7 +55,7 @@ def get_shelter_locations():
     for shelter in shelters:
         locations.append({ "latitude" : shelter["latitude"],
                            "longitude" : shelter["longitude"]})
-    return locations        
+    return locations
 
 def set_user_data(email, field, value):
     db.users.update_one({"email" : email}, {"$set" : {field : value}})

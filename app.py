@@ -26,18 +26,17 @@ def auth():
 def login():
     if "user" in session:
         return redirect(url_for("dashboard"))
-    if request.form["login"]:
-        email = request.form["email"]
-        passw = hashlib.sha512(request.form["password"]).hexdigest()
-        result, msg = db_manager.authenticate_user(email, passw)
-        if result == True:
-            session["user"] = email
-            print session["user"]
-            return redirect(url_for("dashboard"))
-        else:
-            return render_template("authenticate.html", msg = msg)
     else:
-        return redirect(url_for("home"))
+        if "login" in request.form:
+            email = request.form["email"]
+            passw = hashlib.sha512(request.form["password"]).hexdigest()
+            result, msg = db_manager.authenticate_user(email, passw)
+            if result == True:
+                session["user"] = email
+                print session["user"]
+                return redirect(url_for("dashboard"))
+        return render_template("authenticate.html", msg = msg)
+
 
 # user_info: dictionary
 # {"email" : "example@gmail.com",
@@ -109,22 +108,20 @@ def add():
 #             "diapers" : 10}
 #  "last_updated" : 2017-06-24 12:55     //datetime object
     if "submit" in request.form:
-        print "im in"
         shelter = {}
         shelter.update({"name" : request.form["name"]})
         shelter.update({"description" : request.form["des"]})
         shelter.update({"address_zip_code" : request.form["zip"]})
         shelter.update({"address_city" : request.form["city"]})
-        shelter.update({"address_street": request["street"]})
-        shelter.update({"address_street": request["street"]})
+        shelter.update({"address_state": request.form["state"]})
+        shelter.update({"address_street": request.form["street"]})
         shelter.update({"phone_number" : request.form["num"]})
         shelter.update({"population" : request.form["pop"]})
-        shelter.update({"directors" : request.form["user"]})
+        shelter.update({"directors" : session["user"]})
         shelter.update({"needs" : {}})
-        shelter.update({"last_updated" : db_manager.get_time()})
-        shelter.update({"id" : uuid.uuid4().int})
-        print "got up to here"
-        sid = db_manager.add_shelter(shelter, request.form["user"])
+        # shelter.update({"last_updated" : db_manager.get_time()})
+        # shelter.update({"id" : uuid.uuid4().int})
+        sid = db_manager.add_shelter(shelter)
         print sid
         print db_manager.get_shelter(sid)
     return redirect(url_for("dashboard"))
