@@ -202,6 +202,19 @@ def updateinfo():
         shelter =  db_manager.get_shelter(int(request.form["id"]))
     return render_template("results.html", shelter = shelter)
 
+@app.route("/seeinfo/", methods=["POST"])
+def seeinfo():
+    print "see info is running"
+    if "id" not in request.form:
+        return redirect(url_for("dashboard"))
+    else:
+        print "i got here"
+        sid = int(request.form["id"])
+        print sid
+        shelter = db_manager.get_shelter(sid)
+    return render_template("view.html", shelter = shelter)
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

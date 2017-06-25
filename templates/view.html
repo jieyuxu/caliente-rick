@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block body %}
+<a href="/dashboard/"><button type="button" class="btn btn-primary btn-lg">Return to Dashboard</button></a>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- {% for item in shelter%}
+        {% if item=="_id" or item=="directors" or item == "last_updated" or item == id %}
+        {% else %}
+          {{item}}: {{shelter[item]}} <br/>
+        {%endif%}
+      {% endfor %} -->
+      <h3>Shelter Details</h3>
+      <p>
+        Name: {{shelter["name"]}} <br/>
+        Phone #: {{shelter["phone_number"]}}<br/>
+        Address: {{shelter["address"]["latitude"]}}, {{shelter["address"]["longitude"]}}<br/>
+        # of People Serving: {{shelter["population"]}}<br/>
+        Email: {{shelter["directors"]}}
+      </p>
+      <hr>
+      <h3>Currently Requesting</h3>
+      <p>
+        {% if shelter["needs"] != {} %}
+          {% for item in shelter["needs"] %} <!--list of dicts-->
+            {{item}}: {{shelter["needs"][item]}}<br>
+        {% endfor %}
+	{% else %}
+	No current needs on file.<br>
+        {% endif %}
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
